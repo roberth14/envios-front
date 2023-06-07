@@ -14,21 +14,24 @@ if (numeroGuia.length >= 5) {
   <h3 class="text-center">Numero Guia ${numeroGuia}</h3>
 
     <div class="col-lg-3 d-flex align-items-center justify-content-center">
-    <h3 class="text-center">Ciudad</h3>
+    <h3 class="text-center">Ciudad Origen</h3>
     </div>
     <div class="col-lg-3 d-flex align-items-center justify-content-center">
-      <h4><sup>$</sup>29<span> / month</span></h4>
+    <h3 class="text-center">Ciudad Destino</h3>
     </div>
     <div class="col-lg-3 d-flex align-items-center justify-content-center">
-      <ul>
-        <li><i class="bi bi-check"></i> Quam adipiscing vitae proin</li>
-        <li><i class="bi bi-check"></i> <strong>Nec feugiat nisl pretium</strong></li>
-        <li><i class="bi bi-check"></i> Nulla at volutpat diam uteera</li>
-      </ul>
+    <h3 class="text-center">Estado</h3>
+      
     </div>
     <div class="col-lg-3 d-flex align-items-center justify-content-center">
       <div class="text-center"><a href="#" class="buy-btn">Buy Now</a></div>
     </div>
+    <div class="col-xl-12">
+<ul>
+        <li><i class="bi bi-check"></i> Quam adipiscing vitae proin</li>
+        <li><i class="bi bi-check"></i> <strong>Nec feugiat nisl pretium</strong></li>
+        <li><i class="bi bi-check"></i> Nulla at volutpat diam uteera</li>
+      </ul></div>
   </div><!-- End Pricing Item -->
 
 
