@@ -13,13 +13,13 @@
     <link href="../assets/img/favicon.png" rel="icon">
     <link href="../assets/img/apple-touch-icon.png" rel="apple-touch-icon">
 
-    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
         href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,600;1,700&family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
         rel="stylesheet">
-
+        <link rel="stylesheet" href="https://cdn.datatables.net/1.11.1/css/jquery.dataTables.min.css">
+    
     <!-- Vendor CSS Files -->
     <link href="../assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link href="../assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
@@ -27,10 +27,13 @@
     <link href="../assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
     <link href="../assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
     <link href="../assets/vendor/aos/aos.css" rel="stylesheet">
-
-    <!-- Template Main CSS File -->
+    <script src="
+  https://cdn.jsdelivr.net/npm/sweetalert2@11.7.11/dist/sweetalert2.all.min.js
+  "></script>
+    <link href="
+  https://cdn.jsdelivr.net/npm/sweetalert2@11.7.11/dist/sweetalert2.min.css
+  " rel="stylesheet">
     <link href="../assets/css/main.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.1/css/jquery.dataTables.min.css">
 
 
     <!-- =======================================================
@@ -42,7 +45,7 @@
   ======================================================== -->
 </head>
 
-<body>
+<body onload="inicioEnvios()">
 
     <!-- ======= Header ======= -->
     <header id="header" class="header d-flex align-items-center fixed-top">
@@ -60,8 +63,10 @@
                 <ul>
 
 
-                    <li><a href="#">Nombre Usuario</a></li>
-                    <li><a class="get-a-quote bg-danger" href="../index.html">SALIR</a></li>
+                    <li>
+                        <h5 class="fw-bold text-light" id="nombre"></h5>
+                    </li>
+                    <li><a class="get-a-quote bg-danger" id="salir" href="../index.html">SALIR</a></li>
                 </ul>
             </nav><!-- .navbar -->
 
@@ -89,7 +94,7 @@
                 <div class="container">
                     <ol>
                         <li><a href="index.html">Envios</a></li>
-                        <li>Mensajeros</li>
+                        <li><a href="./mensajero/index.html">Mensajeros</a></li>
                     </ol>
                 </div>
             </nav>
@@ -120,26 +125,12 @@
                                     <th>#GUIA</th>
                                     <th>Origen</th>
                                     <th>Destino</th>
-                                    <th>Estado</th>
-                                    <th>Detalles</th>
+                                    <th>Tarifa</th>
+                                    <th>Direccion</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>10001</td>
-                                    <td>Cucuta</td>
-                                    <td>Bogota</td>
-                                    <td>Registrado</td>
-                                    <td><a href="#" type="button" class="btn btn-info">Detalles</a></td>
-                                </tr>
-                                <tr>
-                                    <td>10002</td>
-                                    <td>Santa Marta</td>
-                                    <td>Cali</td>
-                                    <td>Ciuda Destino</td>
-                                    <td><a href="#" type="button" class="btn btn-info">Detalles</a></td>
-                                </tr>
-                                <!-- Agrega más filas según sea necesario -->
+                               
                             </tbody>
                         </table>
 
@@ -162,7 +153,7 @@
                     <div class="modal-body">
                         <div class="breadcrumbs">
                             <div class="page-header d-flex align-items-center"
-                                style="background-image: url('../assets/img/page-header.jpg'); ">
+                                style="background-image: url('../assets/img/page-header.jpg'); height: 100px; ">
                                 <div class="container position-relative">
                                     <div class="row d-flex justify-content-center">
                                         <div class="col-lg-6 text-center">
@@ -182,87 +173,149 @@
                                         <div class="col-md-6 mx-auto text-center">
                                             <h3 class="text-uppercase text-center">Información Origen</h3>
                                             <div class="form-group">
-                                                <label for="cedulaRemitente">Cedula Remitente:</label>
-                                                <div class="input-group">
-                                                    <input type="number" class="form-control" id="cedulaRemitente"
-                                                        placeholder="Ingrese la cedula del remitente">
-                                                    <button class="btn btn-primary">Buscar</button>
-                                                </div>
-                                                <p id="cedulaRemitenteError" style="color: red; "></p>
-                                            </div>
-                                            <div class="form-group">
                                                 <label for="nombreRemitente">Nombre Remitente:</label>
                                                 <input type="text" class="form-control" id="nombreRemitente"
-                                                    placeholder="Ingrese el nombre del remitente">
+                                                    placeholder="Ingrese el nombre ">
                                                 <p id="nombreRemitenteError" style="color: red; "></p>
                                             </div>
-                                            <div class="form-group">
-                                                <label for="telefonoRemitente">Teléfono Remitente:</label>
-                                                <input type="number" class="form-control" id="telefonoRemitente"
-                                                    placeholder="Ingrese el teléfono del remitente">
-                                                <p id="telefonoRemitenteError" style="color: red; "></p>
+                                            <div class="row">
+
+                                                <div class="col-xl-6">
+
+                                                    <div class="form-group">
+                                                        <label for="cedulaRemitente">Cedula Remitente:</label>
+                                                        <div class="input-group">
+                                                            <input type="number" class="form-control"
+                                                                id="cedulaRemitente" placeholder="Ingrese la cedula ">
+                                                            <button class="btn btn-primary"
+                                                                type="button">Buscar</button>
+                                                        </div>
+                                                        <p id="cedulaRemitenteError" style="color: red; "></p>
+                                                    </div>
+                                                </div>
+                                                <div class="col-xl-6">
+                                                    <div class="form-group">
+                                                        <label for="telefonoRemitente">Teléfono Remitente:</label>
+                                                        <input type="number" class="form-control" id="telefonoRemitente"
+                                                            placeholder="Ingrese el teléfono ">
+                                                        <p id="telefonoRemitenteError" style="color: red; "></p>
+                                                    </div>
+                                                </div>
+
                                             </div>
+
+
+
                                             <div class="form-group">
                                                 <label for="emailRemitente">Email Remitente:</label>
                                                 <input type="text" class="form-control" id="emailRemitente"
                                                     placeholder="Ingrese el email del remitente">
                                                 <p id="emailRemitenteError" style="color: red; "></p>
                                             </div>
-                                            <div class="form-group">
-                                                <label for="ciudadOrigen">Ciudad de Origen:</label>
-                                                <select class="form-select" aria-label="Default select example">
-                                                    <option selected>Seleccione la Ciudad</option>
-                                                    <option value="1">Cucuta</option>
-                                                    <option value="2">Bogotá</option>
-                                                    <option value="3">Cali</option>
-                                                </select>
+                                            <div class="row">
+                                                <div class="col-xl-6">
+                                                    <div class="form-group">
+                                                        <label for="departamentoOrigen">Departamento de Origen:</label>
+                                                        <select class="form-select" id="departamentoOrigen"
+                                                            aria-label="Default select example">
+                                                            <option selected>Seleccione un Departamento</option>
+
+                                                        </select>
+                                                        <p id="departamentoOrigenError" style="color: red;"></p>
+                                                    </div>
+                                                </div>
+                                                <div class="col-xl-6">
+                                                    <div class="form-group">
+                                                        <label for="ciudadOrigen">Ciudad de Origen:</label>
+                                                        <select class="form-select" id="ciudadOrigen"
+                                                            aria-label="Default select example">
+                                                            <option selected>Seleccione la Ciudad</option>
+
+                                                        </select>
+                                                        <p id="ciudadOrigenError" style="color: red;"></p>
+                                                    </div>
+                                                </div>
                                             </div>
+
+
                                         </div>
+                                        <hr>
                                         <!-- Agrega aquí los demás campos relacionados con la información de origen -->
                                         <button type="button" class="btn btn-primary siguiente"
                                             data-paso="2">Siguiente</button>
+
+                                        <hr>
                                     </div>
 
                                     <!-- Paso 2: Información de Destino -->
                                     <div class="col-xl-12 paso" id="paso-2" style="display: none;">
-                                        <div class="col">
+                                        <div class="col-md-6 mx-auto text-center">
                                             <h3 class="text-uppercase text-center">Información Destino</h3>
-                                            <div class="form-group">
-                                                <label for="cedulaDestinatario">Cedula Destinatario:</label>
-                                                <div class="input-group">
-                                                    <input type="number" class="form-control" id="cedulaDestinatario"
-                                                        placeholder="Ingrese la cedula del destinatario">
-                                                    <button class="btn btn-primary">Buscar</button>
-                                                </div>
-                                                <p id="cedulaDestinatarioError" style="color: red;"></p>
-                                            </div>
                                             <div class="form-group">
                                                 <label for="nombreDestinatario">Nombre Destinatario:</label>
                                                 <input type="text" class="form-control" id="nombreDestinatario"
                                                     placeholder="Ingrese el nombre del destinatario">
                                                 <p id="nombreDestinatarioError" style="color: red;"></p>
                                             </div>
-                                            <div class="form-group">
-                                                <label for="telefonoDestinatario">Teléfono Destinatario:</label>
-                                                <input type="number" class="form-control" id="telefonoDestinatario"
-                                                    placeholder="Ingrese el teléfono del destinatario">
-                                                <p id="telefonoDestinatarioError" style="color: red;"></p>
+                                            <div class="row">
+                                                <div class="col-xl-6">
+                                                    <div class="form-group">
+                                                        <label for="cedulaDestinatario">Cedula Destinatario:</label>
+                                                        <div class="input-group">
+                                                            <input type="number" class="form-control"
+                                                                id="cedulaDestinatario"
+                                                                placeholder="Ingrese la cedula del destinatario">
+                                                            <button class="btn btn-primary" type="button"
+                                                                s>Buscar</button>
+                                                        </div>
+                                                        <p id="cedulaDestinatarioError" style="color: red;"></p>
+                                                    </div>
+                                                </div>
+                                                <div class="col-xl-6">
+                                                    <div class="form-group">
+                                                        <label for="telefonoDestinatario">Teléfono Destinatario:</label>
+                                                        <input type="number" class="form-control"
+                                                            id="telefonoDestinatario"
+                                                            placeholder="Ingrese el teléfono del destinatario">
+                                                        <p id="telefonoDestinatarioError" style="color: red;"></p>
+                                                    </div>
+                                                </div>
                                             </div>
+
+
+
                                             <div class="form-group">
                                                 <label for="emailDestinatario">Email Destinatario:</label>
                                                 <input type="text" class="form-control" id="emailDestinatario"
                                                     placeholder="Ingrese el email del destinatario">
                                                 <p id="emailDestinatarioError" style="color: red;"></p>
                                             </div>
-                                            <div class="form-group">
-                                                <label for="ciudadDestino">Ciudad de Destino:</label>
-                                                <select class="form-select" aria-label="Default select example">
-                                                    <option selected>Seleccione la Ciudad</option>
-                                                    <option value="1">Cucuta</option>
-                                                    <option value="2">Bogotá</option>
-                                                    <option value="3">Cali</option>
-                                                </select>
+                                            <div class="row">
+                                                <div class="col-xl-6">
+                                                    <div class="form-group">
+                                                        <label for="departamentoDestino">Departamento de
+                                                            Destino:</label>
+                                                        <select class="form-select" id="departamentoDestino"
+                                                            aria-label="Default select example">
+                                                            <option selected>Seleccione un Departamento</option>
+
+                                                        </select>
+                                                        <p id="departamentoDestinoError" style="color: red;"></p>
+                                                    </div>
+                                                </div>
+                                                <div class="col-xl-6">
+                                                    <div class="form-group">
+                                                        <label for="ciudadDestino">Ciudad de Destino:</label>
+                                                        <select class="form-select" id="ciudadDestino"
+                                                            aria-label="Default select example">
+                                                            <option selected>Seleccione la Ciudad</option>
+
+                                                        </select>
+                                                        <p id="ciudadDestinoError" style="color: red;"></p>
+                                                    </div>
+                                                </div>
                                             </div>
+
                                         </div>
                                         <!-- Agrega aquí los demás campos relacionados con la información de destino -->
                                         <button type="button" class="btn btn-secondary anterior"
@@ -280,36 +333,49 @@
                                         <div class="col-xl-3">
                                             <div class="form-group">
                                                 <label for="longitud">Longitud:</label>
-                                                <input type="number" class="form-control" id="longitud"
-                                                    placeholder="Ingrese la longitud">
+                                                <div class="input-group">
+                                                    <input type="number" class="form-control" id="longitud"
+                                                        placeholder="Ingrese la longitud">
+                                                    <span class="input-group-text">cm</span>
+                                                </div>
                                                 <p id="longitudError" style="color: red;"></p>
                                             </div>
                                         </div>
                                         <div class="col-xl-3">
                                             <div class="form-group">
                                                 <label for="ancho">Ancho:</label>
-                                                <input type="number" class="form-control" id="ancho"
-                                                    placeholder="Ingrese el ancho">
+                                                <div class="input-group">
+                                                    <input type="number" class="form-control" id="ancho"
+                                                        placeholder="Ingrese el ancho">
+                                                    <span class="input-group-text">cm</span>
+                                                </div>
                                                 <p id="anchoError" style="color: red;"></p>
                                             </div>
                                         </div>
                                         <div class="col-xl-3">
                                             <div class="form-group">
                                                 <label for="altura">Altura:</label>
-                                                <input type="number" class="form-control" id="altura"
-                                                    placeholder="Ingrese la altura">
+                                                <div class="input-group">
+                                                    <input type="number" class="form-control" id="altura"
+                                                        placeholder="Ingrese la altura">
+                                                    <span class="input-group-text">cm</span>
+                                                </div>
                                                 <p id="alturaError" style="color: red;"></p>
                                             </div>
                                         </div>
                                         <div class="col-xl-3">
                                             <div class="form-group">
                                                 <label for="peso">Peso:</label>
-                                                <input type="number" class="form-control" id="peso"
-                                                    placeholder="Ingrese el peso">
+                                                <div class="input-group">
+                                                    <input type="number" class="form-control" id="peso"
+                                                        placeholder="Ingrese el peso">
+                                                    <span class="input-group-text">kg</span>
+                                                </div>
                                                 <p id="pesoError" style="color: red;"></p>
                                             </div>
                                         </div>
                                     </div>
+
                                     <div class="form-group">
                                         <label for="direccion">Direccion:</label>
                                         <input type="text" class="form-control" id="direccion"
@@ -429,6 +495,8 @@
     <div id="preloader"></div>
 
     <!-- Vendor JS Files -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.1/js/jquery.dataTables.min.js"></script>
     <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="../assets/vendor/purecounter/purecounter_vanilla.js"></script>
     <script src="../assets/vendor/glightbox/js/glightbox.min.js"></script>
@@ -438,9 +506,8 @@
 
     <!-- Template Main JS File -->
     <script src="../assets/js/main.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.datatables.net/1.11.1/js/jquery.dataTables.min.js"></script>
     <script src="../script/lista.js"></script>
+    <script src="../script/main.js"></script>
 
 </body>
 

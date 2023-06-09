@@ -1,52 +1,140 @@
-function buscarEnvio(){
+function cargar(){
+  listaDepartamento()
+.then(response => response.json())
+.then(data => {
+  localStorage.setItem("departamentos", JSON.stringify(data))
 
-let numeroGuia=document.getElementById("numeroGuia").value
-const mensajeError = document.getElementById("mensajeError");
-
-if (numeroGuia.length >= 5) {
-    document.getElementById("datosEnvio").innerHTML=`<section id="horizontal-pricing" class="horizontal-pricing pt-0">
-<div class="container" data-aos="fade-up">
-
-
-
-
-  <div class="row gy-4 pricing-item featured mt-4" data-aos="fade-up" data-aos-delay="200">
-  <h3 class="text-center">Numero Guia ${numeroGuia}</h3>
-
-    <div class="col-lg-3 d-flex align-items-center justify-content-center">
-    <h3 class="text-center">Ciudad Origen</h3>
-    </div>
-    <div class="col-lg-3 d-flex align-items-center justify-content-center">
-    <h3 class="text-center">Ciudad Destino</h3>
-    </div>
-    <div class="col-lg-3 d-flex align-items-center justify-content-center">
-    <h3 class="text-center">Estado</h3>
-      
-    </div>
-    <div class="col-lg-3 d-flex align-items-center justify-content-center">
-      <div class="text-center"><a href="#" class="buy-btn">Buy Now</a></div>
-    </div>
-    <div class="col-xl-12">
-<ul>
-        <li><i class="bi bi-check"></i> Quam adipiscing vitae proin</li>
-        <li><i class="bi bi-check"></i> <strong>Nec feugiat nisl pretium</strong></li>
-        <li><i class="bi bi-check"></i> Nulla at volutpat diam uteera</li>
-      </ul></div>
-  </div><!-- End Pricing Item -->
-
-
-
-</div>
-</section><!-- End Horizontal Pricing Section -->`
-
-  // Desplazamiento suave hacia la sección
-  const section = document.getElementById("horizontal-pricing");
-  section.scrollIntoView({ behavior: "smooth", block: "center" });
-  mensajeError.style.display = "none"; // Ocultar el mensaje de error
+})
+.catch(err => {
+  console.log(err)
+})
+}
+try {
  
-} else {
-  mensajeError.style.display = "block"; // Mostrar el mensaje de error
+  const numeroGuia = document.getElementById("numeroGuia")
+
+  document.addEventListener('DOMContentLoaded', function () {
+    const input = document.getElementById('numeroGuia');
+
+    input.addEventListener('keypress', function (event) {
+      if (event.keyCode === 13) {
+        event.preventDefault();
+        buscarEnvio()
+      }
+    });
+  });
+
+} catch (error) {
+
 }
+
+function buscarEnvio() {
+  document.getElementById("datosEnvio").innerHTML =""
+  let numeroGuia = document.getElementById("numeroGuia").value
+  const mensajeError = document.getElementById("mensajeError");
+
+  if (numeroGuia.length >= 5) {
+    getEnvioGuia(numeroGuia)
+      .then(res => res.json())
+      .then(data => {
+        console.log(data)
+        const ciudadOrigen = buscarMunicipioPorID(data.envio.ciudadOrigenId);
+        const ciudadDestino = buscarMunicipioPorID(data.envio.ciudadDestinoId);
+        
+        let origenColor=""
+        let caminoColor=""
+        let destinoColor=""
+        let repartoColor=""
+        let entregadoColor=""
+
+        for (let i = 0; i < data.estados.length; i++) {
+          if(data.estados[i].estadoId==1){
+            
+            origenColor="-success"
+          }else if(data.estados[i].estadoId==2){
+            
+            caminoColor="-success"
+          }else if(data.estados[i].estadoId==3){
+            
+            destinoColor="-success"
+          }else if(data.estados[i].estadoId==4){
+           
+            repartoColor="-success"
+          } else if(data.estados[i].estadoId==5){
+            
+            entregadoColor="-success"
+          }
+         
+        }
+        document.getElementById("datosEnvio").innerHTML = `
+      <section id="horizontal-pricing" class="horizontal-pricing pt-0">
+      
+         <div class="container" data-aos="fade-up">
+      
+      
+      
+      
+           <div class="row gy-4 pricing-item  mt-4" data-aos="fade-up" data-aos-delay="100">
+                    <h3 class="text-center">Numero Guia: ${numeroGuia}</h3>
+      
+                    <div class="col-xl-6  p-5 align-items-center justify-content-center">
+                      <h3 class="text-center">Ciudad Origen: </h3>
+                      <h3 class="text-center"><span> ${ciudadOrigen.municipio}</span></h3>
+                    
+                    </div>
+                    <div class="col-xl-6  p-5 align-items-center justify-content-center">
+                      <h3 class="text-center">Ciudad Destino:</h3>
+                      <h3 class="text-center">${ciudadDestino.municipio}</h3>
+                  
+                    </div>
+                  
+                  
+                    <div class="row justify-content-center">
+                      <div class="col-xl-6 text-center">
+                          <h3>Estados:</h3>
+                      </div>
+                    </div>
+                    <hr>
+                <div class="row text-center  " id="bodyEstados">
+                <div class="col-xl-2  fw-bold  text-dark  fs-4"><i class="fa-solid fa-cart-flatbed text${origenColor}  me-2"></i><h3 class="text-center"> Origen</h3></div>
+                <div class=" col-xl-3 fw-bold  text-dark  fs-4"><i class="fa-solid fa-truck text${caminoColor}  me-2"></i><h3 class="text-center">Camino </h3></div>
+                <div class=" col-xl-2  fw-bold text-dark  fs-4"><i class="fa-solid fa-truck-ramp-box text${destinoColor}   me-2"></i><h3 class="text-center"> Destino</h3></div>
+                <div class=" col-xl-3  fw-bold  text-dark  fs-4"><i class="fa-solid fa-truck text${repartoColor}  me-2"></i><h3 class="text-center">Reparto</h3></div>
+                <div class="col-xl-2   text-dark  fs-4"><i class="fa fa-home" aria-hidden="true text${entregadoColor} me-2"></i><h3 class="text-center">Entregado</h3></div>
+        
+                  
+      
+                </div>
+      
+          </div><!-- End Pricing Item -->
+      
+      
+      
+        </div>
+      </section><!-- End Horizontal Pricing Section -->`
+       
+        
+        
+         
+        // Desplazamiento suave hacia la sección
+        const section = document.getElementById("horizontal-pricing");
+        section.scrollIntoView({ behavior: "smooth", block: "center" });
+        mensajeError.style.display = "none"; // Ocultar el mensaje de error
+      })
+      .catch(err => {
+        mensajeError.style.display = "block"; // Mostrar el mensaje de error
+        mensajeError.textContent="Numero de guia no esta registrado"
+      })
+      .finally(final => {
+
+      })
+
+
+  } else {
+    mensajeError.style.display = "block"; // Mostrar el mensaje de error
+  }
 
 
 }
+
+
