@@ -79,12 +79,12 @@ function buscarEnvio() {
       
                     <div class="col-xl-6  p-5 align-items-center justify-content-center">
                       <h3 class="text-center">Ciudad Origen: </h3>
-                      <h3 class="text-center"><span> ${ciudadOrigen.municipio}</span></h3>
+                      <h3 class="text-center"><span> ${ciudadOrigen.municipio.municipio+" , "+ciudadOrigen.departamento.departamento}</span></h3>
                     
                     </div>
                     <div class="col-xl-6  p-5 align-items-center justify-content-center">
                       <h3 class="text-center">Ciudad Destino:</h3>
-                      <h3 class="text-center">${ciudadDestino.municipio}</h3>
+                      <h3 class="text-center">${ciudadDestino.municipio.municipio+" , "+ciudadOrigen.departamento.departamento}</h3>
                   
                     </div>
                   

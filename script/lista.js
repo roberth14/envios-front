@@ -3,6 +3,7 @@
  */
 $(document).ready(function () {
     $('#tabla').DataTable({
+        responsive: true, // Agregar esta opción para hacer la tabla responsive
         language: {
             "sProcessing": "Procesando...",
             "sLengthMenu": "Mostrar _MENU_ registros",
@@ -33,6 +34,7 @@ $(document).ready(function () {
         }
     });
 });
+
 /*
     REGISTRAR MENSAJERO
 */
@@ -200,6 +202,8 @@ try {
                         'Envio  Registrado',
                         'success'
                     )
+                    //Mostrar
+                    inicioEnvios()
             })
             .catch(err=>{
                 console.log(err)

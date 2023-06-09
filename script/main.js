@@ -14,6 +14,21 @@ async function getEnvioGuia(guia) {
   })
   return result
 }
+async function getEnvioId(id) {
+    let token = localStorage.getItem("token")
+    const result = await fetch(urlBassic + "/envio/"+id, {
+        method: 'GET',
+        headers: {
+            "Content-type": "application/json",
+            'Access-Control-Allow-Headers': 'Authorization',
+            'Cache-Control': 'no-store',
+            "Authorization": "Bearer " + token
+        },
+        cache: 'no-store',
+
+    })
+    return result
+}
 async function listaEnvios() {
     let token = localStorage.getItem("token")
     const result = await fetch(urlBassic + "/envio", {
@@ -223,9 +238,9 @@ async function listaMunicipios() {
     })
     return result
 }
-// Función para buscar municipio por ID
 function buscarMunicipioPorID(idMunicipio) {
-    let arrayDepartamentos=JSON.parse(localStorage.getItem("departamentos"))
+    let arrayDepartamentos = JSON.parse(localStorage.getItem("departamentos"));
+
     for (let i = 0; i < arrayDepartamentos.length; i++) {
         const departamento = arrayDepartamentos[i];
         const municipios = departamento.municipios;
@@ -234,12 +249,17 @@ function buscarMunicipioPorID(idMunicipio) {
             const municipio = municipios[j];
 
             if (municipio.id_municipio === idMunicipio) {
-                return municipio;
+                return {
+                    municipio: municipio,
+                    departamento: departamento
+                };
             }
         }
     }
+    
     return null;
 }
+
 //Muestro la lista de envios registrados
 function verEnviosR() {
     listaEnvios()
@@ -256,8 +276,8 @@ function verEnviosR() {
                 const ciudadDestino = buscarMunicipioPorID(datos[i].ciudadDestinoId);
 
                 tabla.row.add([datos[i].guia,
-                ciudadOrigen.municipio,
-                ciudadDestino.municipio,
+                ciudadOrigen.municipio.municipio+" , "+ciudadOrigen.departamento.departamento,
+                ciudadDestino.municipio.municipio+" , "+ciudadDestino.departamento.departamento,
                 datos[i].tarifa,
                 datos[i].direccion
                 ]).draw(false);
