@@ -197,19 +197,34 @@ try {
                 var modal = document.getElementById('staticBackdrop');
                     var bootstrapModal = bootstrap.Modal.getInstance(modal);
                     bootstrapModal.hide();
+                   
+                    //Mostrar
+                    inicioEnvios()
+                    const emailEnvio={
+                        id:data.id,
+                        guia:data.guia,
+                        destinatartioId:data.destinatartioId,
+                        remitenteId:data.remitenteId
+                    }
+                    getEnvioGuia(emailEnvio)
+                    .then(response=>response)
+                    .then(data=>{
+                        console.log(data)
+                    })
+                    .catch(err=>{
+                        console.log(err)
+                    })
                     Swal.fire(
                         'Completado',
                         'Envio  Registrado',
                         'success'
                     )
-                    //Mostrar
-                    inicioEnvios()
             })
             .catch(err=>{
                 console.log(err)
             })
             .finally(final=>{
-
+                
             })
         } else {
             alert("Falta Informacion")

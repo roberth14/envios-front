@@ -1,8 +1,24 @@
 const urlBassic = "http://localhost:8081"
 
 localStorage.setItem("modulo", "empleado")
-async function getEnvioGuia(guia) {
-  const result = await fetch(urlBassic + "/envio/guia/"+guia, {
+async function getEnvioGuia(envio) {
+    let token = localStorage.getItem("token")
+  const result = await fetch(urlBassic + "/mail/guia", {
+      method: 'POST',
+      body:JSON.stringify(envio),
+      headers: {
+          "Content-type": "application/json",
+          'Access-Control-Allow-Headers': 'Authorization',
+          'Cache-Control': 'no-store',
+          "Authorization": "Bearer " + token
+      },
+      cache: 'no-store',
+
+  })
+  return result
+}
+async function getEnvioGuiaId(id) {
+  const result = await fetch(urlBassic + "/envio/guia/"+id, {
       method: 'GET',
       headers: {
           "Content-type": "application/json",
@@ -291,10 +307,10 @@ function verEnviosR() {
 }
 //Muestro la lista de empleados en la vista
 function verEmpleados() {
+    
     listaEmpleados()
         .then(response => response.json())
         .then(datos => {
-            console.log(datos)
             var counter = 1;
 
             let tabla = $('#tabla').DataTable();
@@ -428,6 +444,7 @@ try {
 
     salir.addEventListener("click", () => {
         localStorage.clear();
+        sessionStorage.clear()
     });
 } catch (error) {
 
