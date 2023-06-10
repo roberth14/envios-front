@@ -1,4 +1,4 @@
-const urlBassic = "http://localhost:8081"
+const urlBassic = "https://seguimientoenviosbackend-production.up.railway.app"
 
 localStorage.setItem("modulo", "empleado")
 async function getEnvioGuia(envio) {
@@ -341,7 +341,6 @@ function login() {
         email,
         password
     }
-    console.log(usuario)
     iniciarModulo(usuario)
         .then(response => response.json())
         .then(data => {
