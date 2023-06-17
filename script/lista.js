@@ -141,6 +141,8 @@ try {
     const enviarButton = document.querySelector(".enviar");
     enviarButton.addEventListener("click", () => {
         if (validarInformacionAdicional()) {
+            document.getElementById("btnEnvios").innerHTML=`<p id="" style="color: green; ">Guardando envio ...</p>
+            `
             let cedulaRemitente = document.getElementById('cedulaRemitente').value;
             let nombreRemitente = document.getElementById('nombreRemitente').value;
             let telefonoRemitente = document.getElementById('telefonoRemitente').value;
@@ -203,7 +205,8 @@ try {
                     const emailEnvio={
                         id:data.id,
                         guia:data.guia,
-                        destinatartioId:data.destinatartioId,
+                        
+                        destinatarioId:data.destinatarioId,
                         remitenteId:data.remitenteId
                     }
                     getEnvioGuia(emailEnvio)

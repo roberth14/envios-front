@@ -1,6 +1,8 @@
-const urlBassic = "https://seguimientoenviosbackend-production.up.railway.app"
+const urlBassic = "http://localhost:8081"
+//"https://seguimientoenviosbackend-production.up.railway.app"
 
 localStorage.setItem("modulo", "empleado")
+
 async function getEnvioGuia(envio) {
     let token = localStorage.getItem("token")
   const result = await fetch(urlBassic + "/mail/guia", {
@@ -29,6 +31,67 @@ async function getEnvioGuiaId(id) {
 
   })
   return result
+}
+async function getClienteByCedula(cedula) {
+    let token = localStorage.getItem("token")
+    const result = await fetch(urlBassic + "/cliente/"+cedula, {
+        method: 'GET',
+        headers: {
+            "Content-type": "application/json",
+            'Access-Control-Allow-Headers': 'Authorization',
+            'Cache-Control': 'no-store',
+            "Authorization": "Bearer " + token
+        },
+        cache: 'no-store',
+
+    })
+    return result
+}
+function buscarRemitenteCedula(){
+    let cedulaRemitenteYes=document.getElementById("cedulaRemitenteYes")
+    let cedulaRemitenteError =document.getElementById("cedulaRemitenteError")
+    let cedulaRemitente=document.getElementById("cedulaRemitente").value
+    getClienteByCedula(cedulaRemitente)
+    .then(response=>response.json())
+    .then(data=>{
+        cedulaRemitenteYes.textContent="Usuario registrado"
+        cedulaRemitenteError.textContent=""
+        console.log(data)
+        document.getElementById("nombreRemitente").value=data.nombre
+        document.getElementById("telefonoRemitente").value=data.telefono
+        document.getElementById("emailRemitente").value=data.email
+    })
+    .catch(err=>{
+        cedulaRemitenteYes.textContent=""
+        cedulaRemitenteError.textContent="Cedula no esta registrada"
+        console.log(err)
+    })
+    .finally(final=>{
+
+    })
+}
+function buscarDestinatarioCedula(){
+    let cedulaDestinatarioYes=document.getElementById("cedulaDestinatarioYes")
+    let cedulaDestinatarioError =document.getElementById("cedulaDestinatarioError")
+    let cedulaDestinatario=document.getElementById("cedulaDestinatario").value
+    getClienteByCedula(cedulaDestinatario)
+    .then(response=>response.json())
+    .then(data=>{
+        cedulaDestinatarioYes.textContent="Usuario registrado"
+        cedulaDestinatarioError.textContent=""
+        console.log(data)
+        document.getElementById("nombreDestinatario").value=data.nombre
+        document.getElementById("telefonoDestinatario").value=data.telefono
+        document.getElementById("emailDestinatario").value=data.email
+    })
+    .catch(err=>{
+        cedulaDestinatarioYes.textContent=""
+        cedulaDestinatarioError.textContent="Cedula no esta registrada"
+        console.log(err)
+    })
+    .finally(final=>{
+
+    })
 }
 async function getEnvioId(id) {
     let token = localStorage.getItem("token")

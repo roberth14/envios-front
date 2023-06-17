@@ -188,9 +188,10 @@
                                                         <div class="input-group">
                                                             <input type="number" class="form-control"
                                                                 id="cedulaRemitente" placeholder="Ingrese la cedula ">
-                                                            <button class="btn btn-primary"
+                                                            <button class="btn btn-primary" onclick="buscarRemitenteCedula()"
                                                                 type="button">Buscar</button>
                                                         </div>
+                                                        <p id="cedulaRemitenteYes" style="color: green; "></p>
                                                         <p id="cedulaRemitenteError" style="color: red; "></p>
                                                     </div>
                                                 </div>
@@ -266,9 +267,10 @@
                                                             <input type="number" class="form-control"
                                                                 id="cedulaDestinatario"
                                                                 placeholder="Ingrese la cedula del destinatario">
-                                                            <button class="btn btn-primary" type="button"
+                                                            <button class="btn btn-primary" type="button" onclick="buscarDestinatarioCedula()"
                                                                 s>Buscar</button>
                                                         </div>
+                                                        <p id="cedulaDestinatarioYes" style="color: green; "></p>
                                                         <p id="cedulaDestinatarioError" style="color: red;"></p>
                                                     </div>
                                                 </div>
@@ -396,9 +398,12 @@
                                         <p id="tarifaError" style="color: red;"></p>
                                     </div>
                                     <!-- Agrega aquí los demás campos relacionados con la información adicional -->
-                                    <button type="button" class="btn btn-secondary anterior"
+                                    <div id="btnEnvios">
+                                        <button type="button" class="btn btn-secondary anterior"
                                         data-paso="2">Anterior</button>
                                     <button type="button" class="btn btn-primary enviar">Enviar</button>
+                                    </div>
+                                    
                                 </div>
 
 
