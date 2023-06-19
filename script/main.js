@@ -1,4 +1,4 @@
-const urlBassic = "http://localhost:8081"
+const urlBassic = "https://seguimientoenviosbackend-production-dffe.up.railway.app"
 //"https://seguimientoenviosbackend-production.up.railway.app"
 
 localStorage.setItem("modulo", "empleado")
